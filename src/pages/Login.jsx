@@ -3,52 +3,53 @@ import styled from 'styled-components'
 import { BackgroundImage } from '../components/BackgroundImage'
 import { Header } from '../components/Header'
 import { firebaseAuth } from '../utils/firebase-config';
-import {onAuthStateChanged, signInWithEmailAndPassword} from 'firebase/auth'
+import { onAuthStateChanged, signInWithEmailAndPassword } from 'firebase/auth'
 import { useNavigate } from 'react-router-dom';
 export default function Login() {
-
-  const [formValues,setFormValues] = useState({
-    email:"",
-    password:""
+  const [login, setLogin] = useState(false);
+  const [formValues, setFormValues] = useState({
+    email: "",
+    password: ""
   });
   const navigate = useNavigate();
 
-const handleLogIn=async()=>{
-  // console.log(formValues)
-  try {
-    const {email,password} = formValues;
-    await signInWithEmailAndPassword(firebaseAuth,email,password);
-  } catch (error) {
-    console.log(error)
+  const handleLogIn = async () => {
+    // console.log(formValues)
+    try {
+      const { email, password } = formValues;
+      await signInWithEmailAndPassword(firebaseAuth, email, password);
+      setLogin(false);
+    } catch (error) {
+      console.log(error)
+    }
   }
-}
 
-onAuthStateChanged(firebaseAuth,(currentUser)=>{
-  if(currentUser) navigate('/');
-})
-  
+  onAuthStateChanged(firebaseAuth, (currentUser) => {
+    if (!currentUser) navigate('/login');
+  })
+
   return (
     <Container>
-    <BackgroundImage />
-    <div className="Content">
-      <Header login/>
-      <div className='form-container flex column a-center j-center'>
-        <div className="form flex column a-center j-center">
-          <div className="title">
-            <h3>Log In</h3>
-          </div>
-          <div className="container flex column">
-          <input type="email" placeholder='Email adress' name="email" value={formValues.email} onChange={(e)=>setFormValues({...formValues,[e.target.name]:e.target.value})}/>
-          <input type="password" placeholder='Password' name="password" value={formValues.password} onChange={(e)=>setFormValues({...formValues,[e.target.name]:e.target.value})} />
-          <button onClick={handleLogIn}>Login</button>
-          </div>
-          
-        </div>
-        
-      </div>
+      <BackgroundImage />
+      <div className="Content">
+        <Header login={false} />
+        <div className='form-container flex column a-center j-center'>
+          <div className="form flex column a-center j-center">
+            <div className="title">
+              <h3>Log In</h3>
+            </div>
+            <div className="container flex column">
+              <input type="email" placeholder='Email adress' name="email" value={formValues.email} onChange={(e) => setFormValues({ ...formValues, [e.target.name]: e.target.value })} />
+              <input type="password" placeholder='Password' name="password" value={formValues.password} onChange={(e) => setFormValues({ ...formValues, [e.target.name]: e.target.value })} />
+              <button onClick={handleLogIn}>Login</button>
+            </div>
 
-    </div>
-  </Container>
+          </div>
+
+        </div>
+
+      </div>
+    </Container>
   )
 }
 

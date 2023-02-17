@@ -21,13 +21,14 @@ export const Navbar = ({ scroll }) => {
   const [showSearch, setSearch] = useState(false);
   const [hover, setHover] = useState(false);
   const [onmic,setOnMic] = useState(false);
+  const [text,setText] = useState('');
   const {
     transcript,
     listening,
     resetTranscript,
     browserSupportsSpeechRecognition,
   } = useSpeechRecognition();
-console.log(transcript);
+// console.log(transcript);
   onAuthStateChanged(firebaseAuth, (currentUser) => {
     if (!currentUser) navigate('/login');
   })
@@ -54,10 +55,9 @@ console.log(transcript);
         </div>
         <div className="right flex a-center">
           <button className='microPhone'
-          onClick={SpeechRecognition.startListening}
-          
-           onFocus={() =>{setSearch(true)}}
-           onBlur={() => SpeechRecognition.stopListening}
+          onClick={() => {SpeechRecognition.startListening();setOnMic(true);setText('')}}
+          onFocus={() =>{setSearch(true)}}
+          onBlur={() =>{SpeechRecognition.stopListening();setOnMic(false)}}
           >
             <FaMicrophone />
           </button>
@@ -72,16 +72,20 @@ console.log(transcript);
 
             <input type="text" placeholder='Titles, People, Generes' autoComplete='on'
               
-              value={onmic?`${transcript}`:""}
+              value={onmic?`${transcript}`: text}
               onMouseEnter={() => setHover(true)}
               onMouseLeave={() => setHover(false)}
+              onChange={e => setText(e.target.value)}
+              onFocus={() => {setOnMic(false);resetTranscript()}}
               onBlur={() => {
                 setSearch(false);
                 setHover(false);
               }}
             />
           </div>
-          <button onClick={() => signOut(firebaseAuth)}>
+          <button onClick={() => {
+            alert('Your Signing out Click Ok to confirm')
+            signOut(firebaseAuth)}}>
             <FaPowerOff />
           </button>
         </div>
