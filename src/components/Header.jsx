@@ -4,6 +4,7 @@ import styled from 'styled-components'
 import logo from '../assets/Netflix-Logo.png';
 
 export function Header(props) {
+  console.log(props.login)
   const navigate = useNavigate();
   return (
     <Container className='flex j-between a-center'>
