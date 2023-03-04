@@ -6,6 +6,7 @@ import { firebaseAuth } from '../utils/firebase-config';
 import { onAuthStateChanged, signInWithEmailAndPassword } from 'firebase/auth'
 import { useNavigate } from 'react-router-dom';
 export default function Login() {
+
   const [login, setLogin] = useState(false);
   const [formValues, setFormValues] = useState({
     email: "",
@@ -14,19 +15,24 @@ export default function Login() {
   const navigate = useNavigate();
 
   const handleLogIn = async () => {
-    // console.log(formValues)
+    
     try {
       const { email, password } = formValues;
+      console.log(formValues)
       await signInWithEmailAndPassword(firebaseAuth, email, password);
-      setLogin(false);
+      setLogin(true);
+
     } catch (error) {
+      alert(error);
       console.log(error)
     }
   }
 
-  onAuthStateChanged(firebaseAuth, (currentUser) => {
-    if (!currentUser) navigate('/login');
-  })
+  // onAuthStateChanged(firebaseAuth, (currentUser) => {
+  //   if (!currentUser) navigate('/login');
+  // })
+
+ 
 
   return (
     <Container>

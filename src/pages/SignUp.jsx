@@ -18,6 +18,7 @@ const handleSignIn=async()=>{
     const {email,password} = formValues;
     await createUserWithEmailAndPassword(firebaseAuth,email,password);
   } catch (error) {
+    alert(error);
     console.log(error)
   }
 }

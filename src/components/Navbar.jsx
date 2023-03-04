@@ -28,7 +28,7 @@ export const Navbar = ({ scroll }) => {
     resetTranscript,
     browserSupportsSpeechRecognition,
   } = useSpeechRecognition();
-// console.log(transcript);
+console.log(transcript);
   onAuthStateChanged(firebaseAuth, (currentUser) => {
     if (!currentUser) navigate('/login');
   })
