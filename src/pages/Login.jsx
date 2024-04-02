@@ -5,6 +5,7 @@ import { Header } from '../components/Header'
 import { firebaseAuth } from '../utils/firebase-config';
 import { onAuthStateChanged, signInWithEmailAndPassword } from 'firebase/auth'
 import { useNavigate } from 'react-router-dom';
+import {Example} from '../utils/notification';
 export default function Login() {
 
   const [login, setLogin] = useState(false);
@@ -18,15 +19,16 @@ export default function Login() {
     
     try {
       const { email, password } = formValues;
-      console.log(formValues)
       await signInWithEmailAndPassword(firebaseAuth, email, password);
-      setLogin(true);
+      navigate(`/`);
 
     } catch (error) {
       alert(error);
       console.log(error)
     }
   }
+
+  
 
   // onAuthStateChanged(firebaseAuth, (currentUser) => {
   //   if (!currentUser) navigate('/login');

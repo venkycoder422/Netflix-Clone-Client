@@ -84,7 +84,7 @@ console.log(transcript);
             />
           </div>
           <button onClick={() => {
-            alert('Your Signing out Click Ok to confirm')
+            alert('Your Signing out Click Ok to confirm');
             signOut(firebaseAuth)}}>
             <FaPowerOff />
           </button>
